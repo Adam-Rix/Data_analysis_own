@@ -1,0 +1,78 @@
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(geomtextpath)
+
+# Load CSV files and view their contents
+
+#sample_sub <- read_csv("sample_sub.csv")
+#View(sample_sub)
+
+#test_data <- read_csv("test_data.csv")
+#View(test_data)
+
+#train_data_dictionary <- read_csv("train_data_dictionary.csv")
+#View(train_data_dictionary)
+
+# Clean data by removing rows with missing values
+#clean_data_1 <- na.omit(sample_sub) %>%
+  #na.omit(test_data) %>%
+  #na.omit(train_data)
+
+# Merge datasets by 'case_id'
+ALLInfo <- merge(sample_sub, test_data, by = "case_id")
+
+# Filter out rows with complete cases
+clean_data_2 <- ALLInfo %>%
+  filter(complete.cases(.))
+
+# Select specific columns from the dataset
+clean_data_3 <- clean_data_2 %>%
+  select(case_id, City_Code_Hospital,
+         Department, `Type of Admission`,
+         `Severity of Illness`, Age,
+         Admission_Deposit)
+
+#View(clean_data_3)
+
+# Aggregate data to find mean 'Admission_Deposit' by 'Age' and other combinations.
+#agg_data <- aggregate(Admission_Deposit ~ Age, data = clean_data_3, FUN = mean)
+
+# Plotting
+#ggplot(data = agg_data, aes(x = Age, y = Admission_Deposit, group = 1)) +
+  #geom_line() +
+  #labs(x = "Age", y = "Cost of provided service", title = "Dependency of service cost on a person's age")
+####################
+#agg_data <- aggregate(Admission_Deposit ~ Department, data = clean_data_3, FUN = mean)
+
+#ggplot(data = agg_data, aes(x = Department, y = Admission_Deposit, group = 1)) +
+#geom_line() +
+#labs(x = "Department", y = "Cost of provided service", title = "Dependency of service cost on a Department")
+####################
+#agg_data <- aggregate(Admission_Deposit ~ `Type of Admission`, data = clean_data_3, FUN = length)
+
+
+#ggplot(data = agg_data, aes(x = `Type of Admission`, y = Admission_Deposit, group = 1)) +
+#geom_bar(stat = "identity", fill = "skyblue") +
+#labs(x = "Type of Admission", y = "Cost of provided service", title = "Dependency of service cost on a Type of Admission") +
+#coord_cartesian(ylim = c(0, max(agg_data$Admission_Deposit) * 1.5))
+####################
+#ggplot(clean_data_3, aes(x = factor(`Department`), fill = Age)) +
+#  geom_bar(position = "dodge") +
+#  labs(title = "Department by age groups",
+#       x = "Department") +
+#  theme_minimal()
+####################
+# Filter data for 'Department' = 'surgery' and others.
+filtered_data <- clean_data_3 %>%
+  filter(Department == 'surgery')  # Фильтрация только для 'gynecology'
+
+# Plot bar chart for 'Department' = 'surgery' by 'Age' and others.
+ggplot(filtered_data, aes(x = factor(`Department`), fill = Age)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Department of Surgery by Age",
+       x = "Department") +
+  theme_minimal()
+
+
+
