@@ -1,6 +1,9 @@
 # Health_Data_analysis_own
 Here are my own pet projects dedicated to data analysis in the field of medicine.
 
+For assignments and results, please refer to the PRESENTATION first.
+--
+
 Main datasets
 --
 train_data.csv – File containing features related to patient, hospital and Length of stay on case basis
