@@ -7,10 +7,6 @@ train_data.csv – File containing features related to patient, hospital and Len
 
 train_data_dictonary.csv – File containing the information of the features in train file
 
-Test Set
---
-test_data.csv – File containing features related to patient, hospital. Need to predict the Length of stay for each case_id
-
 Sample Submission
 --
 case_id: Unique id for each case
